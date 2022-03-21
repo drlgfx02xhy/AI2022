@@ -9,29 +9,25 @@ from torch.autograd import Variable
 from torch.utils.data import DataLoader
 from util import setup_seed
 
-setup_seed(42)
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+def init_config(model, train_ds:str, valid_ds:str, bsz:int, learning_rate:float, device):
+    setup_seed(42)
+    print("loading data...")
+    train_set = MyDataset(train_ds)
+    valid_set = MyDataset(valid_ds)
+    print("loaded!")
+    train_loader = DataLoader(dataset = train_set, batch_size = bsz, shuffle=False)
+    valid_loader = DataLoader(dataset = valid_set, batch_size = bsz, shuffle=False)
+    Optim_SGD = torch.optim.SGD(model.parameters(), lr = learning_rate)
+    CE_Loss = nn.CrossEntropyLoss().to(device)
+    print("initialize!")
+    # train_loop(MLPmodel, test_loader, valid_loader, Optim_SGD, CE_Loss, 10, device)
+    return train_loader, valid_loader, Optim_SGD, CE_Loss
 
-print("loading...")
-
-# train_set = MyDataset("train")
-valid_set = MyDataset("x")
-test_set = MyDataset("y")
-
-print("loading over!")
-
-# train_loader = DataLoader(dataset = train_set, batch_size = 200, shuffle=True)
-valid_loader = DataLoader(dataset = valid_set, batch_size = 20, shuffle=False)
-test_loader = DataLoader(dataset = test_set, batch_size = 20, shuffle=False)
-
-# MLPmodel = MLP(args.num_layers, args.act_f, arg.paralist, args.need_bias).to(device)
-MLPmodel = MLP(3, "softmax", [285,10,2]).to(device)
-print(MLPmodel)
-# optimizer = torch.optim.SGD(MLPmodel.parameters(), lr = args.lr)
-Optim_SGD = torch.optim.SGD(MLPmodel.parameters(), lr = 0.5)
-CE_Loss = nn.CrossEntropyLoss().to(device)
-
-def train_loop(model, train_loader, valid_loader, optimizer, criterion, epochs, device):
+def train_loop(model, train_loader, valid_loader, optimizer, lr, criterion, epochs, device):
+    print("start training!")
+    best_accs = 0
+    temp_cnt = 0
+    temp_lr = lr
     for epoch in range(epochs):
         for idx, (data, target) in enumerate(train_loader):
             data = data.to(device)
@@ -41,13 +37,28 @@ def train_loop(model, train_loader, valid_loader, optimizer, criterion, epochs, 
             loss = criterion(logits, target)
             loss.backward()
             optimizer.step()
-            if(idx % 200 == 0):
+            if(epoch % 10 == 0 and epoch != 0):
                 print("epoch{}, idx{}: loss:{} accs: ".format(str(epoch), str(idx), str(loss.item())))
-                accs = eval_loop(model, valid_loader)
+                accs = eval_loop(model, valid_loader, device)
+                if(accs > best_accs):
+                    best_accs = accs
+                    temp_cnt = 0
+                else:
+                    temp_cnt += 1
+                    if(temp_cnt >= 10):
+                        temp_lr *= 0.7
+                        if(temp_lr >= 1e-2):
+                            print("\n...decrease lr... lr = {}\n".format(str(temp_lr)))
+                            optimizer = torch.optim.SGD(model.parameters(), lr = temp_lr)
+                            temp_cnt = 0
+                        else:
+                            print(best_accs)
+                            return
                 print(accs)
+    print(best_accs)
 
 
-def eval_loop(model, data_loader):
+def eval_loop(model, data_loader, device):
     model.eval()
     total_correct = 0
     total_both = 0
@@ -68,8 +79,6 @@ def cal(y, y_hat):
     correct = (y_hat[:,-1] == y).sum()
     return correct, both
 
-train_loop(MLPmodel, test_loader, valid_loader, Optim_SGD, CE_Loss, 10, device)
-
 """
 `hp`
 lr: 0.2 0.5 0.8
@@ -80,12 +89,32 @@ max_epoch = 5000
     
 """
 
+"""train: according to F1 score
+
+0. 3个模型: 3*3
+1. 神经元数量: 3*4
+2. lr: 3*3
+3. 激活函数: 5
+4. bsz: 5
+
+0. svm: 5
+1. soft margin: 5
+2. 2 kernal: 2*5
+
+
 """
-TODO:
-    设置训练提前停止（weight_decay; 10epoch不变优则停止）
-    按照DL的lab1写好config文件，自动跑测试
-    写好老师要求的几个准确度的衡量
-    实验结果分析
+
+"""valid & test:
+
+1. 4个模型在valid集的过拟合、欠拟合程度: 4*3
+2. 4个模型在test集的F1 score, ROC, AUC, 是否符合valid预期，有无其他现象
+    4*(1 + 2 + 1 + 2)
+"""
+
+"""
+机器、语言、库
+预处理和读取方式
+4'
 """
 
         
