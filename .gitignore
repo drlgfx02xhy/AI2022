@@ -1,5 +1,7 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
+/lab1/*.npy
+/lab1/data
 *.py[cod]
 *$py.class
 
