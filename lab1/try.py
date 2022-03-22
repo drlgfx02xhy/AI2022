@@ -22,10 +22,14 @@ import torch.nn.functional as F
 
 # np.save(r"D:\USTC\two_down\AI\lab\lab1\x_feat.npy", feat)
 # np.save(r"D:\USTC\two_down\AI\lab\lab1\x_label.npy", label)
-a =[285,100,2]
-i=0
-for i, _ in enumerate(a[:-2]):
-    print(_)
-print(a[i+1])
+# a =[285,100,2]
+# i=0
+# for i, _ in enumerate(a[:-2]):
+#     print(_)
+# print(a[i+1])
+import logging
     
-    
+logging.basicConfig(filename='log.txt',
+                     format = '%(asctime)s - %(name)s - %(levelname)s : %(message)s',
+                     level=logging.INFO)
+logging.info("dasd")
