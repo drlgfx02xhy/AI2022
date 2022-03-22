@@ -14,7 +14,7 @@ device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 print(device)
 
 
-MLPmodel = MLP(2, "sigmoid", [285,2]).to(device)
+MLPmodel = MLP(4, "sigmoid", [285,128,8,2]).to(device)
 Train_loader, Valid_loader, Optim_SGD, CE_Loss = init_config(MLPmodel, train_ds, valid_ds, bsz, learning_rate, device)
 
 train_loop(MLPmodel, Train_loader, Valid_loader, Optim_SGD, CE_Loss, MAX_epochs, device)

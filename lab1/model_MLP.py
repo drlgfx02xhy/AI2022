@@ -5,13 +5,13 @@ import torch.functional as F
 activate_dict = {
     "relu": nn.ReLU,
     "tanh": nn.Tanh,
-    "softmax": nn.Softmax
+    "sigmoid": nn.Sigmoid
 }
 
 class MLP(nn.Module):
     def __init__(self, num_layers: int, activate_function: str, neural_num_list: list, need_bias = True):
         super(MLP, self).__init__()
-        assert activate_function in ['relu', 'tanh', 'softmax']
+        assert activate_function in ['relu', 'tanh', 'sigmoid']
         assert num_layers == len(neural_num_list)
         assert neural_num_list[0] == 285
         assert neural_num_list[-1] == 2

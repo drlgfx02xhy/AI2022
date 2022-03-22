@@ -8,6 +8,7 @@ from model_MLP import MLP
 from torch.autograd import Variable
 from torch.utils.data import DataLoader
 from util import setup_seed
+from sklearn.metrics import roc_curve, auc, f1_score, accuracy_score
 
 def init_config(model, train_ds:str, valid_ds:str, bsz:int, learning_rate:float, device):
     setup_seed(42)
@@ -15,19 +16,16 @@ def init_config(model, train_ds:str, valid_ds:str, bsz:int, learning_rate:float,
     train_set = MyDataset(train_ds)
     valid_set = MyDataset(valid_ds)
     print("loaded!")
-    train_loader = DataLoader(dataset = train_set, batch_size = bsz, shuffle=False)
-    valid_loader = DataLoader(dataset = valid_set, batch_size = bsz, shuffle=False)
+    train_loader = DataLoader(dataset = train_set, batch_size = bsz, shuffle=True)
+    valid_loader = DataLoader(dataset = valid_set, batch_size = bsz, shuffle=True)
     Optim_SGD = torch.optim.SGD(model.parameters(), lr = learning_rate)
     CE_Loss = nn.CrossEntropyLoss().to(device)
     print("initialize!")
     # train_loop(MLPmodel, test_loader, valid_loader, Optim_SGD, CE_Loss, 10, device)
     return train_loader, valid_loader, Optim_SGD, CE_Loss
 
-def train_loop(model, train_loader, valid_loader, optimizer, lr, criterion, epochs, device):
+def train_loop(model, train_loader, valid_loader, optimizer, criterion, epochs, device):
     print("start training!")
-    best_accs = 0
-    temp_cnt = 0
-    temp_lr = lr
     for epoch in range(epochs):
         for idx, (data, target) in enumerate(train_loader):
             data = data.to(device)
@@ -37,47 +35,48 @@ def train_loop(model, train_loader, valid_loader, optimizer, lr, criterion, epoc
             loss = criterion(logits, target)
             loss.backward()
             optimizer.step()
-            if(epoch % 10 == 0 and epoch != 0):
-                print("epoch{}, idx{}: loss:{} accs: ".format(str(epoch), str(idx), str(loss.item())))
-                accs = eval_loop(model, valid_loader, device)
-                if(accs > best_accs):
-                    best_accs = accs
-                    temp_cnt = 0
-                else:
-                    temp_cnt += 1
-                    if(temp_cnt >= 10):
-                        temp_lr *= 0.7
-                        if(temp_lr >= 1e-2):
-                            print("\n...decrease lr... lr = {}\n".format(str(temp_lr)))
-                            optimizer = torch.optim.SGD(model.parameters(), lr = temp_lr)
-                            temp_cnt = 0
-                        else:
-                            print(best_accs)
-                            return
-                print(accs)
-    print(best_accs)
+            if(idx % 50 == 0):
+                acuracy, F1, FPR, TPR, AUC = eval(model, valid_loader, device)
+                print("epoch{}, idx{}: F1:{:.5f} accs{:.5f}".format(str(epoch), str(idx), F1, acuracy))
 
-
-def eval_loop(model, data_loader, device):
+def eval(model, data_loader, device):
     model.eval()
-    total_correct = 0
-    total_both = 0
     for i, (x, y) in enumerate(data_loader):
         x = Variable(x.to(device))
         logits = F.softmax(model(x),dim = -1)
         _, y_hat = logits.topk(1, dim = -1)
-        correct, both = cal(y, y_hat)
-        total_correct += correct
-        total_both += both
-    accs = float(total_correct / total_both)
-    return accs
-    
-def cal(y, y_hat):
+        y_hat = y_hat.cpu().numpy()
+        y = y.numpy()
+        accs = accuracy_score(y, y_hat)
+        f1 = f1_score(y, y_hat, average="binary")
+        fpr, tpr, threshold = roc_curve(y, y_hat)
+        scale = auc(fpr, tpr)
+    return accs, f1, fpr, tpr, scale
+
+"""  
+def cal_F1(y, y_hat):
+    TP = FN = FP = TN = 0
+    y = y.numpy()
+    y_hat = y_hat.cpu().numpy()
+    # correct = (y_hat[:,-1] == y).sum()
+    for i in range(len(y)):
+        if(y[i] == 1 and y_hat[i] == 1):
+            TP += 1
+        elif(y[i] == 0 and y_hat[i] == 1):
+            FP += 1
+        elif(y[i] == 1 and y_hat[i] == 0):
+            FN += 1
+        else:
+            TN += 1
+    return TP,FP,FN,TN
+
+def cal_accs(y, y_hat):
     both = len(y)
     y = y.numpy()
     y_hat = y_hat.cpu().numpy()
     correct = (y_hat[:,-1] == y).sum()
     return correct, both
+"""
 
 """
 `hp`
