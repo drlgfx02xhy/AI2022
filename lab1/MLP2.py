@@ -13,11 +13,11 @@ idx = 2
 train_ds = "train"
 valid_ds = "validation"
 bsz = 1024
-learning_rate = 0.5
+learning_rate = 0.4
 MAX_epochs = 5
 activator = "sigmoid"
 N_layer = 3
-layer_list = [285,16,2]
+layer_list = [285,32,2]
 
 
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
@@ -30,5 +30,5 @@ Train_loader, Valid_loader, Optim_SGD, CE_Loss = init_config(MLPmodel, train_ds,
 
 model = train_loop(MLPmodel, Train_loader, Valid_loader, Optim_SGD, CE_Loss, MAX_epochs, device, idx)
 # save model
-save_path = "./model_MLP2_1.pt"
+save_path = "./model_MLP2_2.pt"
 torch.save(model.state_dict(), save_path)

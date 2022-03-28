@@ -1,0 +1,160 @@
+2022-03-28 21:03:43,409 - root - INFO : batch_size: 1024, learning_rate: 0.50, max_epoch: 5, activator: sigmoid, layer_list: [285, 16, 2]
+2022-03-28 21:03:49,613 - root - INFO : loading data...
+2022-03-28 21:07:44,249 - root - INFO : loaded!
+2022-03-28 21:07:44,251 - root - INFO : initialize!
+2022-03-28 21:07:44,251 - root - INFO : start training!
+2022-03-28 21:07:57,640 - root - INFO : train: epoch0, idx0: F1:0.00669 accs0.51151
+2022-03-28 21:07:57,640 - root - INFO : eval: epoch0, idx0: F1:0.01399 accs0.55937
+2022-03-28 21:08:10,428 - root - INFO : train: epoch0, idx100: F1:0.77483 accs0.77632
+2022-03-28 21:08:10,428 - root - INFO : eval: epoch0, idx100: F1:0.65772 accs0.68125
+2022-03-28 21:08:23,278 - root - INFO : train: epoch0, idx200: F1:0.75987 accs0.75987
+2022-03-28 21:08:23,278 - root - INFO : eval: epoch0, idx200: F1:0.73826 accs0.75625
+2022-03-28 21:08:36,112 - root - INFO : train: epoch0, idx300: F1:0.74386 accs0.75987
+2022-03-28 21:08:36,113 - root - INFO : eval: epoch0, idx300: F1:0.74919 accs0.75938
+2022-03-28 21:08:50,215 - root - INFO : train: epoch0, idx400: F1:0.76109 accs0.76974
+2022-03-28 21:08:50,215 - root - INFO : eval: epoch0, idx400: F1:0.71429 accs0.73750
+2022-03-28 21:09:03,465 - root - INFO : train: epoch0, idx500: F1:0.72830 accs0.76316
+2022-03-28 21:09:03,465 - root - INFO : eval: epoch0, idx500: F1:0.74522 accs0.75000
+2022-03-28 21:09:16,345 - root - INFO : train: epoch0, idx600: F1:0.74210 accs0.74507
+2022-03-28 21:09:16,346 - root - INFO : eval: epoch0, idx600: F1:0.68810 accs0.69688
+2022-03-28 21:09:28,876 - root - INFO : train: epoch1, idx0: F1:0.73409 accs0.73191
+2022-03-28 21:09:28,876 - root - INFO : eval: epoch1, idx0: F1:0.73065 accs0.72813
+2022-03-28 21:09:41,948 - root - INFO : train: epoch1, idx100: F1:0.72232 accs0.73191
+2022-03-28 21:09:41,948 - root - INFO : eval: epoch1, idx100: F1:0.71795 accs0.72500
+2022-03-28 21:09:54,688 - root - INFO : train: epoch1, idx200: F1:0.74468 accs0.76316
+2022-03-28 21:09:54,688 - root - INFO : eval: epoch1, idx200: F1:0.72857 accs0.76250
+2022-03-28 21:10:07,405 - root - INFO : train: epoch1, idx300: F1:0.74957 accs0.75822
+2022-03-28 21:10:07,405 - root - INFO : eval: epoch1, idx300: F1:0.74598 accs0.75313
+2022-03-28 21:10:20,214 - root - INFO : train: epoch1, idx400: F1:0.73394 accs0.76151
+2022-03-28 21:10:20,214 - root - INFO : eval: epoch1, idx400: F1:0.73571 accs0.76875
+2022-03-28 21:10:33,008 - root - INFO : train: epoch1, idx500: F1:0.74786 accs0.75822
+2022-03-28 21:10:33,009 - root - INFO : eval: epoch1, idx500: F1:0.74126 accs0.76875
+2022-03-28 21:10:46,256 - root - INFO : train: epoch1, idx600: F1:0.76239 accs0.77138
+2022-03-28 21:10:46,256 - root - INFO : eval: epoch1, idx600: F1:0.72549 accs0.73750
+2022-03-28 21:10:59,384 - root - INFO : train: epoch2, idx0: F1:0.71886 accs0.74013
+2022-03-28 21:10:59,384 - root - INFO : eval: epoch2, idx0: F1:0.76687 accs0.76250
+2022-03-28 21:11:13,144 - root - INFO : train: epoch2, idx100: F1:0.76094 accs0.76645
+2022-03-28 21:11:13,144 - root - INFO : eval: epoch2, idx100: F1:0.73288 accs0.75625
+2022-03-28 21:11:26,513 - root - INFO : train: epoch2, idx200: F1:0.73790 accs0.74178
+2022-03-28 21:11:26,513 - root - INFO : eval: epoch2, idx200: F1:0.73125 accs0.73125
+2022-03-28 21:11:39,894 - root - INFO : train: epoch2, idx300: F1:0.74915 accs0.75658
+2022-03-28 21:11:39,894 - root - INFO : eval: epoch2, idx300: F1:0.72078 accs0.73125
+2022-03-28 21:11:53,269 - root - INFO : train: epoch2, idx400: F1:0.73913 accs0.76316
+2022-03-28 21:11:53,269 - root - INFO : eval: epoch2, idx400: F1:0.72000 accs0.71562
+2022-03-28 21:12:06,190 - root - INFO : train: epoch2, idx500: F1:0.75298 accs0.76151
+2022-03-28 21:12:06,190 - root - INFO : eval: epoch2, idx500: F1:0.77551 accs0.79375
+2022-03-28 21:12:19,436 - root - INFO : train: epoch2, idx600: F1:0.78095 accs0.77303
+2022-03-28 21:12:19,436 - root - INFO : eval: epoch2, idx600: F1:0.76276 accs0.75313
+2022-03-28 21:12:32,540 - root - INFO : train: epoch3, idx0: F1:0.78019 accs0.76645
+2022-03-28 21:12:32,540 - root - INFO : eval: epoch3, idx0: F1:0.73926 accs0.71562
+2022-03-28 21:12:45,578 - root - INFO : train: epoch3, idx100: F1:0.74472 accs0.74178
+2022-03-28 21:12:45,578 - root - INFO : eval: epoch3, idx100: F1:0.68027 accs0.70625
+2022-03-28 21:12:58,606 - root - INFO : train: epoch3, idx200: F1:0.76304 accs0.73849
+2022-03-28 21:12:58,606 - root - INFO : eval: epoch3, idx200: F1:0.73926 accs0.71562
+2022-03-28 21:13:12,237 - root - INFO : train: epoch3, idx300: F1:0.72759 accs0.74507
+2022-03-28 21:13:12,237 - root - INFO : eval: epoch3, idx300: F1:0.80000 accs0.80937
+2022-03-28 21:13:25,368 - root - INFO : train: epoch3, idx400: F1:0.73418 accs0.75822
+2022-03-28 21:13:25,368 - root - INFO : eval: epoch3, idx400: F1:0.76721 accs0.77812
+2022-03-28 21:13:38,441 - root - INFO : train: epoch3, idx500: F1:0.77365 accs0.77961
+2022-03-28 21:13:38,441 - root - INFO : eval: epoch3, idx500: F1:0.71380 accs0.73438
+2022-03-28 21:13:51,580 - root - INFO : train: epoch3, idx600: F1:0.77651 accs0.77467
+2022-03-28 21:13:51,580 - root - INFO : eval: epoch3, idx600: F1:0.77743 accs0.77812
+2022-03-28 21:14:04,254 - root - INFO : train: epoch4, idx0: F1:0.77627 accs0.78289
+2022-03-28 21:14:04,254 - root - INFO : eval: epoch4, idx0: F1:0.74143 accs0.74062
+2022-03-28 21:14:17,156 - root - INFO : train: epoch4, idx100: F1:0.76161 accs0.74671
+2022-03-28 21:14:17,156 - root - INFO : eval: epoch4, idx100: F1:0.74375 accs0.74375
+2022-03-28 21:14:29,454 - root - INFO : train: epoch4, idx200: F1:0.76950 accs0.78618
+2022-03-28 21:14:29,454 - root - INFO : eval: epoch4, idx200: F1:0.76125 accs0.78438
+2022-03-28 21:14:42,486 - root - INFO : train: epoch4, idx300: F1:0.76923 accs0.75822
+2022-03-28 21:14:42,486 - root - INFO : eval: epoch4, idx300: F1:0.79100 accs0.79688
+2022-03-28 21:14:55,580 - root - INFO : train: epoch4, idx400: F1:0.75294 accs0.75822
+2022-03-28 21:14:55,580 - root - INFO : eval: epoch4, idx400: F1:0.73955 accs0.74687
+2022-03-28 21:15:08,156 - root - INFO : train: epoch4, idx500: F1:0.73913 accs0.74342
+2022-03-28 21:15:08,156 - root - INFO : eval: epoch4, idx500: F1:0.76246 accs0.74687
+2022-03-28 21:15:20,933 - root - INFO : train: epoch4, idx600: F1:0.75972 accs0.77632
+2022-03-28 21:15:20,933 - root - INFO : eval: epoch4, idx600: F1:0.74172 accs0.75625
+
+在train和eval都逐渐收敛
+但F1 score和accuracy都存在一定抖动
+因此存在问题：无法收敛到最优的点
+针对这种情况，采取以下超参数调整办法：
+1. 适当降低lr，如0.5->0.4
+2. 增大某些层神经元数量，让网络学到更多、更细致的特征，利于提高F1 score
+
+2022-03-28 22:04:47,685 - root - INFO : batch_size: 1024, learning_rate: 0.40, max_epoch: 5, activator: sigmoid, layer_list: [285, 32, 2]
+2022-03-28 22:04:53,199 - root - INFO : loading data...
+2022-03-28 22:31:18,267 - root - INFO : batch_size: 1024, learning_rate: 0.40, max_epoch: 5, activator: sigmoid, layer_list: [285, 32, 2]
+2022-03-28 22:31:23,432 - root - INFO : loading data...
+2022-03-28 22:35:18,373 - root - INFO : loaded!
+2022-03-28 22:35:18,377 - root - INFO : initialize!
+2022-03-28 22:35:18,377 - root - INFO : start training!
+2022-03-28 22:35:32,326 - root - INFO : train: epoch0, idx0: F1:0.00000 accs0.50987
+2022-03-28 22:35:32,326 - root - INFO : eval: epoch0, idx0: F1:0.00000 accs0.55625
+2022-03-28 22:35:46,175 - root - INFO : train: epoch0, idx100: F1:0.77355 accs0.77467
+2022-03-28 22:35:46,175 - root - INFO : eval: epoch0, idx100: F1:0.66667 accs0.68750
+2022-03-28 22:35:59,654 - root - INFO : train: epoch0, idx200: F1:0.75738 accs0.75658
+2022-03-28 22:35:59,654 - root - INFO : eval: epoch0, idx200: F1:0.74247 accs0.75938
+2022-03-28 22:36:12,996 - root - INFO : train: epoch0, idx300: F1:0.74386 accs0.75987
+2022-03-28 22:36:12,996 - root - INFO : eval: epoch0, idx300: F1:0.74919 accs0.75938
+2022-03-28 22:36:26,209 - root - INFO : train: epoch0, idx400: F1:0.76109 accs0.76974
+2022-03-28 22:36:26,210 - root - INFO : eval: epoch0, idx400: F1:0.71429 accs0.73750
+2022-03-28 22:36:39,154 - root - INFO : train: epoch0, idx500: F1:0.72830 accs0.76316
+2022-03-28 22:36:39,154 - root - INFO : eval: epoch0, idx500: F1:0.74522 accs0.75000
+2022-03-28 22:36:51,613 - root - INFO : train: epoch0, idx600: F1:0.74210 accs0.74507
+2022-03-28 22:36:51,613 - root - INFO : eval: epoch0, idx600: F1:0.68810 accs0.69688
+2022-03-28 22:37:04,660 - root - INFO : train: epoch1, idx0: F1:0.72277 accs0.72368
+2022-03-28 22:37:04,660 - root - INFO : eval: epoch1, idx0: F1:0.72727 accs0.72813
+2022-03-28 22:37:17,897 - root - INFO : train: epoch1, idx100: F1:0.71795 accs0.72862
+2022-03-28 22:37:17,897 - root - INFO : eval: epoch1, idx100: F1:0.70968 accs0.71875
+2022-03-28 22:37:31,341 - root - INFO : train: epoch1, idx200: F1:0.74427 accs0.76151
+2022-03-28 22:37:31,341 - root - INFO : eval: epoch1, idx200: F1:0.74126 accs0.76875
+2022-03-28 22:37:44,315 - root - INFO : train: epoch1, idx300: F1:0.74788 accs0.75493
+2022-03-28 22:37:44,315 - root - INFO : eval: epoch1, idx300: F1:0.74522 accs0.75000
+2022-03-28 22:37:57,213 - root - INFO : train: epoch1, idx400: F1:0.73394 accs0.76151
+2022-03-28 22:37:57,214 - root - INFO : eval: epoch1, idx400: F1:0.74021 accs0.77187
+2022-03-28 22:38:10,510 - root - INFO : train: epoch1, idx500: F1:0.74957 accs0.75822
+2022-03-28 22:38:10,510 - root - INFO : eval: epoch1, idx500: F1:0.74740 accs0.77187
+2022-03-28 22:38:23,568 - root - INFO : train: epoch1, idx600: F1:0.76239 accs0.77138
+2022-03-28 22:38:23,569 - root - INFO : eval: epoch1, idx600: F1:0.72131 accs0.73438
+2022-03-28 22:38:36,405 - root - INFO : train: epoch2, idx0: F1:0.71813 accs0.74178
+2022-03-28 22:38:36,405 - root - INFO : eval: epoch2, idx0: F1:0.76543 accs0.76250
+2022-03-28 22:38:49,467 - root - INFO : train: epoch2, idx100: F1:0.75885 accs0.76480
+2022-03-28 22:38:49,467 - root - INFO : eval: epoch2, idx100: F1:0.73720 accs0.75938
+2022-03-28 22:39:02,579 - root - INFO : train: epoch2, idx200: F1:0.73579 accs0.74013
+2022-03-28 22:39:02,579 - root - INFO : eval: epoch2, idx200: F1:0.73125 accs0.73125
+2022-03-28 22:39:15,971 - root - INFO : train: epoch2, idx300: F1:0.75127 accs0.75822
+2022-03-28 22:39:15,971 - root - INFO : eval: epoch2, idx300: F1:0.72492 accs0.73438
+2022-03-28 22:39:29,395 - root - INFO : train: epoch2, idx400: F1:0.73588 accs0.76151
+2022-03-28 22:39:29,395 - root - INFO : eval: epoch2, idx400: F1:0.71827 accs0.71562
+2022-03-28 22:39:42,607 - root - INFO : train: epoch2, idx500: F1:0.75556 accs0.76480
+2022-03-28 22:39:42,608 - root - INFO : eval: epoch2, idx500: F1:0.77133 accs0.79063
+2022-03-28 22:39:55,598 - root - INFO : train: epoch2, idx600: F1:0.77636 accs0.76974
+2022-03-28 22:39:55,598 - root - INFO : eval: epoch2, idx600: F1:0.75758 accs0.75000
+2022-03-28 22:40:08,335 - root - INFO : train: epoch3, idx0: F1:0.77743 accs0.76645
+2022-03-28 22:40:08,335 - root - INFO : eval: epoch3, idx0: F1:0.74487 accs0.72813
+2022-03-28 22:40:21,000 - root - INFO : train: epoch3, idx100: F1:0.74593 accs0.74342
+2022-03-28 22:40:21,000 - root - INFO : eval: epoch3, idx100: F1:0.67808 accs0.70625
+2022-03-28 22:40:33,771 - root - INFO : train: epoch3, idx200: F1:0.75749 accs0.73355
+2022-03-28 22:40:33,771 - root - INFO : eval: epoch3, idx200: F1:0.75000 accs0.73125
+2022-03-28 22:40:46,301 - root - INFO : train: epoch3, idx300: F1:0.73205 accs0.74836
+2022-03-28 22:40:46,301 - root - INFO : eval: epoch3, idx300: F1:0.79739 accs0.80625
+2022-03-28 22:40:58,880 - root - INFO : train: epoch3, idx400: F1:0.73609 accs0.75822
+2022-03-28 22:40:58,880 - root - INFO : eval: epoch3, idx400: F1:0.76471 accs0.77500
+2022-03-28 22:41:11,252 - root - INFO : train: epoch3, idx500: F1:0.77496 accs0.78125
+2022-03-28 22:41:11,252 - root - INFO : eval: epoch3, idx500: F1:0.71864 accs0.74062
+2022-03-28 22:41:23,609 - root - INFO : train: epoch3, idx600: F1:0.78289 accs0.78289
+2022-03-28 22:41:23,609 - root - INFO : eval: epoch3, idx600: F1:0.77743 accs0.77812
+2022-03-28 22:41:35,843 - root - INFO : train: epoch4, idx0: F1:0.77342 accs0.78125
+2022-03-28 22:41:35,843 - root - INFO : eval: epoch4, idx0: F1:0.73750 accs0.73750
+2022-03-28 22:41:48,403 - root - INFO : train: epoch4, idx100: F1:0.75767 accs0.74013
+2022-03-28 22:41:48,403 - root - INFO : eval: epoch4, idx100: F1:0.75155 accs0.75000
+2022-03-28 22:42:00,702 - root - INFO : train: epoch4, idx200: F1:0.77622 accs0.78947
+2022-03-28 22:42:00,702 - root - INFO : eval: epoch4, idx200: F1:0.76552 accs0.78750
+2022-03-28 22:42:13,329 - root - INFO : train: epoch4, idx300: F1:0.77044 accs0.75987
+2022-03-28 22:42:13,329 - root - INFO : eval: epoch4, idx300: F1:0.79487 accs0.80000
+2022-03-28 22:42:25,588 - root - INFO : train: epoch4, idx400: F1:0.75465 accs0.76151
+2022-03-28 22:42:25,588 - root - INFO : eval: epoch4, idx400: F1:0.73955 accs0.74687
+2022-03-28 22:42:37,909 - root - INFO : train: epoch4, idx500: F1:0.74124 accs0.74507
+2022-03-28 22:42:37,910 - root - INFO : eval: epoch4, idx500: F1:0.76023 accs0.74375
+2022-03-28 22:42:50,255 - root - INFO : train: epoch4, idx600: F1:0.76106 accs0.77796
+2022-03-28 22:42:50,255 - root - INFO : eval: epoch4, idx600: F1:0.74667 accs0.76250
