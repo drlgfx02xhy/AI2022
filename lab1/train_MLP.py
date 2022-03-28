@@ -11,13 +11,14 @@ from util import setup_seed
 from sklearn.metrics import roc_curve, auc, f1_score, accuracy_score
 import logging
 
-def log():
-    logging.basicConfig(filename='log.txt',
+def log(idx):
+    filename = "log_MLP"+ str(idx) +".txt"
+    logging.basicConfig(filename = filename,
                      format = '%(asctime)s - %(name)s - %(levelname)s : %(message)s',
                      level=logging.INFO)
 
-def init_config(model, train_ds:str, valid_ds:str, bsz:int, learning_rate:float, device):
-    log()
+def init_config(model, train_ds:str, valid_ds:str, bsz:int, learning_rate:float, device, idx):
+    log(idx)
     setup_seed(42)
     logging.info("loading data...")
     print("loading data...")
@@ -34,8 +35,8 @@ def init_config(model, train_ds:str, valid_ds:str, bsz:int, learning_rate:float,
     # train_loop(MLPmodel, test_loader, valid_loader, Optim_SGD, CE_Loss, 10, device)
     return train_loader, valid_loader, Optim_SGD, CE_Loss
 
-def train_loop(model, train_loader, valid_loader, optimizer, criterion, epochs, device):
-    log()
+def train_loop(model, train_loader, valid_loader, optimizer, criterion, epochs, device, idx):
+    log(idx)
     logging.info("start training!")
     print("start training!")
     for epoch in range(epochs):
@@ -48,12 +49,15 @@ def train_loop(model, train_loader, valid_loader, optimizer, criterion, epochs, 
             loss.backward()
             optimizer.step()
             if(idx % 100 == 0):
-                acuracy, F1, FPR, TPR, AUC = eval(model, valid_loader, device)
-                logging.info("epoch{}, idx{}: F1:{:.5f} accs{:.5f}".format(str(epoch), str(idx), F1, acuracy))
+                t_accs, t_f1, t_fpr, t_tpr, t_auc = eval(model, train_loader, device, idx)
+                acuracy, F1, FPR, TPR, AUC = eval(model, valid_loader, device, idx)
+                logging.info("train: epoch{}, idx{}: F1:{:.5f} accs{:.5f}".format(str(epoch), str(idx), t_f1, t_accs))
+                logging.info("eval: epoch{}, idx{}: F1:{:.5f} accs{:.5f}".format(str(epoch), str(idx), F1, acuracy))
                 print("epoch{}, idx{}: F1:{:.5f} accs{:.5f}".format(str(epoch), str(idx), F1, acuracy))
+    return model
 
-def eval(model, data_loader, device):
-    log()
+def eval(model, data_loader, device, idx):
+    log(idx)
     model.eval()
     for i, (x, y) in enumerate(data_loader):
         x = Variable(x.to(device))
@@ -67,30 +71,6 @@ def eval(model, data_loader, device):
         scale = auc(fpr, tpr)
     return accs, f1, fpr, tpr, scale
 
-"""  
-def cal_F1(y, y_hat):
-    TP = FN = FP = TN = 0
-    y = y.numpy()
-    y_hat = y_hat.cpu().numpy()
-    # correct = (y_hat[:,-1] == y).sum()
-    for i in range(len(y)):
-        if(y[i] == 1 and y_hat[i] == 1):
-            TP += 1
-        elif(y[i] == 0 and y_hat[i] == 1):
-            FP += 1
-        elif(y[i] == 1 and y_hat[i] == 0):
-            FN += 1
-        else:
-            TN += 1
-    return TP,FP,FN,TN
-
-def cal_accs(y, y_hat):
-    both = len(y)
-    y = y.numpy()
-    y_hat = y_hat.cpu().numpy()
-    correct = (y_hat[:,-1] == y).sum()
-    return correct, both
-"""
 
 """
 `hp`
