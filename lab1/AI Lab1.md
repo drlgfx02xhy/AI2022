@@ -8,29 +8,39 @@
 
 所用语言：Python
 
-库：torch, numpy, sklearn
-
-
+库：torch, numpy, sklearn + python=3.9 anaconda自带
 
 
 
 ## 数据预处理及读取
 
+### MLP
+
+读取.csv文件并存入.npy文件
+
 <img src="pics/loaddata.png" style="zoom:50%;" />
+
+定义Dataset
 
 <img src="pics/dataset.png" style="zoom:50%;" />
 
+### SVM
+
+尝试了在整个数据集上进行训练，速度极慢。于是将数据集随机选出1/100作为新的数据集。也就是trainset 7k样本，validset 7k样本，testset 1k样本。记为"small_{}"feat/label,{}=train, validation, test
+
+取1/100的代码：
+
+<img src="pics/SVMsmalldata.png" style="zoom:50%;" />
 
 
 
 
-## 训练过程
+
+##  训练过程
 
 
 
 ### 主要函数
-
-
 
 #### MLP
 
@@ -83,6 +93,10 @@
 5. 第二次实验结果：
 
     <img src="pics/MLP22.png" style="zoom:50%;" />
+    
+    稳定性和F1 score都有一定提升
+    
+    选择第二次实验的模型在test集上进行测试
 
 #### MLP3
 
@@ -102,7 +116,7 @@
     针对这种情况，采取以下超参数调整办法：
 
     1. 适当降低lr，如0.5->0.3
-    2. 适当减小batchszie，防止bsz大lr小从而导致收敛到局部最优
+    2. 适当减小batchszie，防止bsz大、lr小从而导致收敛到局部最优
     3. 增大某些层神经元数量，让网络学到更多、更细致的特征，利于提高F1 score
 
 4. 第二次实验超参数：
@@ -112,6 +126,10 @@
 5. 第二次实验结果：
 
     <img src="pics/MLP32.png" style="zoom:50%;" />
+    
+    F1 score最大值超过了第一次试验，但稳定性没有提升。
+    
+    选择第二次实验的模型在test集上进行测试。
 
 #### MLP4
 
@@ -147,10 +165,36 @@
 5. 第二次实验结果：
 
     <img src="pics/MLP42.png" style="zoom:50%;" />
+    
+    稳定性提升明显。F1 score没有明显提升，与上一次实验持平。
+    
+    选择第二次实验的模型在test集上进行测试
 
 #### SVM
 
+##### kernal = rbf
 
+<img src="pics/svmtrain.png" style="zoom:50%;" />
+
+可以看到，软间隔c=1时，train和epoch的F1 score较为接近；调为1000，过拟合；调为500，仍过拟合；调为100，效果略有上升；调为50，持平；调为150，过拟合
+
+选择c=100作为候选
+
+##### kernal = linear
+
+<img src="pics/svmlinear.png" style="zoom:50%;" />
+
+软间隔c=1时，train和epoch的F1 score较为接近；调为100，持平
+
+F1 score低于“kernal = rbf， c = 100”的模型
+
+##### kernal = poly
+
+<img src="pics/svmpoly.png" style="zoom:50%;" />
+
+一阵狂调，皆失败...
+
+最终选择“kernal = rbf， c = 100”的模型在test集上进行测试
 
 ### 测试及分析
 
