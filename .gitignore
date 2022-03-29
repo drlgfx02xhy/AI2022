@@ -4,6 +4,9 @@ __pycache__/
 /lab1/data
 *.py[cod]
 *$py.class
+/lab1/*.pt
+/lab1/*.pkl
+.gitignore
 
 # C extensions
 *.so

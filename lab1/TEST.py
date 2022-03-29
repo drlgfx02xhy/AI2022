@@ -9,15 +9,15 @@ import matplotlib.pyplot as plt
 import logging
 
 def getlog(mode):
-    logging.basicConfig(filename='log_test_' + mode + '.txt',
+    logging.basicConfig(filename='./log_test_' + mode + '.txt',
                      format = '%(asctime)s - %(name)s - %(levelname)s : %(message)s',
                      level=logging.INFO)
 
 def get_data(mode, small=False):
     print("get data")
     logging.info("get data")
-    feat_path = "./"+ mode +"_feat.npy" if small==False else "./small"+ mode +"_feat.npy"
-    label_path = "./"+ mode +"_label.npy" if small==False else "./small"+ mode +"_label.npy"
+    feat_path = "./"+ mode +"_feat.npy" if small==False else "./small_"+ mode +"_feat.npy"
+    label_path = "./"+ mode +"_label.npy" if small==False else "./small_"+ mode +"_label.npy"
     feat = np.load(feat_path)
     feat = np.array(feat, dtype=np.float32)
     label = np.load(label_path)
@@ -28,20 +28,20 @@ def get_data(mode, small=False):
 
 def init_MLP(num_layers):
     # load torch model
-    print("load torch model")
-    logging.info("load torch model")
+    print("load MLP model")
+    logging.info("load MLP model")
     if(num_layers == 2):
-        mlp = MLP(2, "sigmoid", [285,32,2])
-        mlp.load_state_dict(torch.load("./model_MLP_2_2.pt"))
+        mlp = MLP(3, "sigmoid", [285,32,2])
+        mlp.load_state_dict(torch.load("./model_MLP2_2.pt"))
     elif(num_layers == 3):
-        mlp = MLP(3, "sigmoid", [285,128,16,2])
-        mlp.load_state_dict(torch.load("./model_MLP_3_2.pt"))
+        mlp = MLP(4, "sigmoid", [285,128,16,2])
+        mlp.load_state_dict(torch.load("./model_MLP3_2.pt"))
     elif(num_layers == 4):
-        mlp = MLP(4, "sigmoid", [285,64,16,4,2])
-        mlp.load_state_dict(torch.load("./model_MLP_4_2.pt"))
+        mlp = MLP(5, "sigmoid", [285,128,64,10,2])
+        mlp.load_state_dict(torch.load("./model_MLP4_2.pt"))
     mlp.cuda()
-    print("load torch model done")
-    logging.info("load torch model done\n")
+    print("load MLP model done")
+    logging.info("load MLP model done\n")
     return mlp
 
 def init_SVM():
@@ -76,7 +76,7 @@ def predict(model, mode, test_feat, test_label, train_feat, train_label):
         
     print("predict SVM done")
     logging.info("predict SVM done\n")
-    return F1_score, train_F1_score
+    return F1_score, train_F1_score, roc_auc
         
 
 def cal(y, pred_y):
@@ -97,6 +97,7 @@ def draw(fpr, tpr, roc_auc):
     plt.ylabel('True Positive Rate')
     plt.title('ROC_curve')
     plt.legend(loc="lower right")
+    plt.savefig("./pics/ROC_curve"+"_"+str(roc_auc)+".png")
     plt.show()
     
 def TEST(mode, layers = 0):
@@ -106,19 +107,19 @@ def TEST(mode, layers = 0):
         test_feat, test_label = get_data("test", small=False)
         model = init_MLP(layers)
     if(mode == "SVM"):
-        feat, label = get_data("train", small=True)
+        train_feat, train_label = get_data("train", small=True)
         test_feat, test_label = get_data("test", small=True)
         model = init_SVM()
 
-    F1_score, train_F1_score = predict(model, type, test_feat, test_label, train_feat, train_label)
-    print("F1_score:{}, train_F1_score:{}".format(F1_score, train_F1_score))
-    logging.info("F1_score:{}, train_F1_score:{}\n\n".format(F1_score, train_F1_score))
+    F1_score, train_F1_score , AUC = predict(model, mode, test_feat, test_label, train_feat, train_label)
+    print("F1_score:{}, train_F1_score:{}, AUC:{}".format(F1_score, train_F1_score, AUC))
+    logging.info("F1_score:{}, train_F1_score:{}, AUC{}\n\n".format(F1_score, train_F1_score, AUC))
     
 def main():
     TEST(mode="MLP", layers = 2)
     TEST(mode="MLP", layers = 3)
     TEST(mode="MLP", layers = 4)
-    TEST("SVM")
+    TEST(mode="SVM")
     
 if __name__ == "__main__":
     main()
