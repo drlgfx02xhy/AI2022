@@ -5,7 +5,11 @@ from sklearn.metrics import roc_curve, auc, f1_score, accuracy_score
 import logging
 import joblib
 
-model = svm.SVC(C=1.0, kernel='linear', gamma='auto', max_iter=50000)
+c = 10000
+kernal = 'poly'
+degree = 512
+
+model = svm.SVC(C= c, kernel= kernal, gamma='auto', max_iter= 1000000, degree=degree)
 """
 kernel ：核函数，默认是rbf，可以是‘linear’, ‘poly’, ‘rbf’, ‘sigmoid’, ‘precomputed’
 linear：线性分类器（C越大分类效果越好，但有可能会过拟合（default C=1））
@@ -21,6 +25,7 @@ def log():
 
 log()
 
+logging.info("c:{}, kernal:{}, degree:{}".format(c, kernal, degree))
 # load train and validation data
 print("Loading data...")
 logging.info("Loading data...")
@@ -60,6 +65,6 @@ print("train: F1:{:.5f} accs{:.5f}".format(t_f1, t_accs))
 print("eval: F1:{:.5f} accs{:.5f}".format(f1, accs))
 
 # save model
-path = "./model_SVM_1_linear.pkl"
+path = "./model_SVM_"+str(c)+"_"+str(kernal)+str(degree)+".pkl"
 joblib.dump(model, path)
 

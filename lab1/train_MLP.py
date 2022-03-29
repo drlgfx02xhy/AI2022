@@ -69,48 +69,7 @@ def eval(model, data_loader, device, idx):
         f1 = f1_score(y, y_hat, average="binary")
         fpr, tpr, threshold = roc_curve(y, y_hat)
         scale = auc(fpr, tpr)
-    return accs, f1, fpr, tpr, scale
-
-
-"""
-`hp`
-lr: 0.2 0.5 0.8
-list: [285,2] [285,10,2] [285,64,8,2]
-bsz: 128 512 1024
-activate: relu tanh softmax
-max_epoch = 5000
-    
-"""
-
-"""train: according to F1 score
-
-0. 3个模型: 3*3
-1. 神经元数量: 3*4
-2. lr: 3*3
-3. 激活函数: 5
-4. bsz: 5
-
-0. svm: 5
-1. soft margin: 5
-2. 2 kernal: 2*5
-
-
-"""
-
-"""valid & test:
-
-1. 4个模型在valid集的过拟合、欠拟合程度: 4*3
-2. 4个模型在test集的F1 score, ROC, AUC, 是否符合valid预期，有无其他现象
-    4*(1 + 2 + 1 + 2)
-"""
-
-"""
-机器、语言、库
-预处理和读取方式
-4'
-"""
-
-        
+    return accs, f1, fpr, tpr, scale     
         
         
         
