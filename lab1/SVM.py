@@ -5,7 +5,7 @@ from sklearn.metrics import roc_curve, auc, f1_score, accuracy_score
 import logging
 import joblib
 
-model = svm.SVC(C=1.0, kernel='rbf')
+model = svm.SVC(C=1.0, kernel='linear', gamma='auto', max_iter=50000)
 """
 kernel ：核函数，默认是rbf，可以是‘linear’, ‘poly’, ‘rbf’, ‘sigmoid’, ‘precomputed’
 linear：线性分类器（C越大分类效果越好，但有可能会过拟合（default C=1））
@@ -24,12 +24,14 @@ log()
 # load train and validation data
 print("Loading data...")
 logging.info("Loading data...")
-train_feat = np.load('/home/mist/xhyAIlab/lab1/train_feat.npy')
-train_label = np.load('/home/mist/xhyAIlab/lab1/train_label.npy')
-train_label = np.array(train_label, dtype=np.int)
-valid_feat = np.load('/home/mist/xhyAIlab/lab1/validation_feat.npy')
-valid_label = np.load('/home/mist/xhyAIlab/lab1/validation_label.npy')
-valid_label = np.array(valid_label, dtype=np.int)
+train_feat = np.load('/home/mist/xhyAIlab/lab1/small_train_feat.npy')
+train_feat = np.array(train_feat, dtype=np.float32)
+train_label = np.load('/home/mist/xhyAIlab/lab1/small_train_label.npy')
+train_label = np.array(train_label, dtype=int)
+valid_feat = np.load('/home/mist/xhyAIlab/lab1/small_validation_feat.npy')
+valid_feat = np.array(valid_feat, dtype=np.float32)
+valid_label = np.load('/home/mist/xhyAIlab/lab1/small_validation_label.npy')
+valid_label = np.array(valid_label, dtype=int)
 
 print("Data loaded.")
 logging.info("Data loaded.")
@@ -40,8 +42,8 @@ model.fit(train_feat, train_label)
 
 print("SVM inference...")
 logging.info("SVM inference...")
-t_label = np.array(model.predict(train_feat),dtype=np.int)
-pre_label = np.array(model.predict(valid_feat),dtype=np.int)
+t_label = np.array(model.predict(train_feat),dtype=int)
+pre_label = np.array(model.predict(valid_feat),dtype=int)
 
 t_accs = accuracy_score(train_label, t_label)
 accs = accuracy_score(valid_label, pre_label)
@@ -58,6 +60,6 @@ print("train: F1:{:.5f} accs{:.5f}".format(t_f1, t_accs))
 print("eval: F1:{:.5f} accs{:.5f}".format(f1, accs))
 
 # save model
-path = "./model_SVM_1.pkl"
+path = "./model_SVM_1_linear.pkl"
 joblib.dump(model, path)
 
