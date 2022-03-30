@@ -7,7 +7,8 @@ __pycache__/
 /lab1/*.pt
 /lab1/*.pkl
 .gitignore
-
+/PB*/
+/lab1/PB*
 # C extensions
 *.so
 
