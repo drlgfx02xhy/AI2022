@@ -1,0 +1,60 @@
+2022-03-30 02:20:56,931 - root - INFO : get data
+2022-03-30 02:23:02,917 - root - INFO : load data done
+
+2022-03-30 02:23:02,917 - root - INFO : get data
+2022-03-30 02:23:20,995 - root - INFO : load data done
+
+2022-03-30 02:23:20,995 - root - INFO : load MLP model
+2022-03-30 02:23:24,780 - root - INFO : load MLP model done
+
+2022-03-30 02:23:24,816 - root - INFO : predict MLP
+2022-03-30 02:23:26,331 - root - INFO : predict SVM done
+
+2022-03-30 02:23:26,331 - root - INFO : F1_score:0.7325383304940373, train_F1_score:0.7428674656003332, AUC0.7558238514083215
+
+
+2022-03-30 02:23:26,334 - root - INFO : get data
+2022-03-30 02:25:33,738 - root - INFO : load data done
+
+2022-03-30 02:25:33,738 - root - INFO : get data
+2022-03-30 02:25:52,003 - root - INFO : load data done
+
+2022-03-30 02:25:52,003 - root - INFO : load MLP model
+2022-03-30 02:25:52,033 - root - INFO : load MLP model done
+
+2022-03-30 02:25:52,069 - root - INFO : predict MLP
+2022-03-30 02:25:52,810 - root - INFO : predict SVM done
+
+2022-03-30 02:25:52,810 - root - INFO : F1_score:0.7369662094924935, train_F1_score:0.7463361692761894, AUC0.7574916280973238
+
+
+2022-03-30 02:25:52,812 - root - INFO : get data
+2022-03-30 02:28:04,777 - root - INFO : load data done
+
+2022-03-30 02:28:04,777 - root - INFO : get data
+2022-03-30 02:28:22,846 - root - INFO : load data done
+
+2022-03-30 02:28:22,846 - root - INFO : load MLP model
+2022-03-30 02:28:22,870 - root - INFO : load MLP model done
+
+2022-03-30 02:28:22,906 - root - INFO : predict MLP
+2022-03-30 02:28:23,574 - root - INFO : predict SVM done
+
+2022-03-30 02:28:23,575 - root - INFO : F1_score:0.7382980535797946, train_F1_score:0.7490497518280292, AUC0.7547711034758281
+
+
+2022-03-30 02:28:23,577 - root - INFO : get data
+2022-03-30 02:28:24,856 - root - INFO : load data done
+
+2022-03-30 02:28:24,856 - root - INFO : get data
+2022-03-30 02:28:25,047 - root - INFO : load data done
+
+2022-03-30 02:28:25,047 - root - INFO : load SVM model
+2022-03-30 02:28:25,069 - root - INFO : load SVM model done
+
+2022-03-30 02:28:25,069 - root - INFO : predict SVM
+2022-03-30 02:28:34,632 - root - INFO : predict SVM done
+
+2022-03-30 02:28:34,633 - root - INFO : F1_score:0.7205240174672487, train_F1_score:0.7753938484621155, AUC0.7433755760368663
+
+
