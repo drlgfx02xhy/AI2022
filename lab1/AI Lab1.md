@@ -1,4 +1,4 @@
-# AI Lab1
+# AI Lab1 Report
 
 ​											  							   徐海阳 PB20000326
 
@@ -8,7 +8,9 @@
 
 所用语言：Python
 
-库：torch, numpy, sklearn + python=3.9 anaconda自带
+库：anaconda python == 3.9
+
+​		torch, numpy, sklearn
 
 
 
@@ -18,7 +20,7 @@
 
 读取.csv文件并存入.npy文件
 
-<img src="pics/loaddata.png" style="zoom:50%;" />
+<img src="pics/loaddata.png" style="zoom:40%;" />
 
 定义Dataset
 
@@ -30,15 +32,11 @@
 
 取1/100的代码：
 
-<img src="pics/SVMsmalldata.png" style="zoom:50%;" />
-
-
+<img src="pics/SVMsmalldata.png" style="zoom:40%;" />
 
 
 
 ##  训练过程
-
-
 
 ### 主要函数
 
@@ -58,7 +56,7 @@
 
 #### SVM
 
-<img src="pics/SVM.png" style="zoom:50%;" />
+<img src="pics/SVM.png" style="zoom:40%;" />
 
 
 
@@ -74,7 +72,7 @@
 
 2. 第一次实验结果：
 
-    <img src="pics/MLP21.png" style="zoom:50%;" />
+    <img src="pics/MLP21.png" style="zoom:40%;" />
 
 3. 结果分析及超参数选择：
 
@@ -92,7 +90,7 @@
 
 5. 第二次实验结果：
 
-    <img src="pics/MLP22.png" style="zoom:50%;" />
+    <img src="pics/MLP22.png" style="zoom:40%;" />
     
     稳定性和F1 score都有一定提升
     
@@ -106,7 +104,7 @@
 
 2. 第一次实验结果：
 
-    <img src="pics/MLP31.png" style="zoom:50%;" />
+    <img src="pics/MLP31.png" style="zoom:40%;" />
 
 3. 结果分析及超参数选择：
 
@@ -125,7 +123,7 @@
 
 5. 第二次实验结果：
 
-    <img src="pics/MLP32.png" style="zoom:50%;" />
+    <img src="pics/MLP32.png" style="zoom:40%;" />
     
     F1 score最大值超过了第一次试验，但稳定性没有提升。
     
@@ -139,7 +137,7 @@
 
 2. 第一次实验结果：
 
-    <img src="pics/MLP41.png" style="zoom:50%;" />
+    <img src="pics/MLP41.png" style="zoom:40%;" />
 
 3. 结果分析及超参数选择：
 
@@ -174,7 +172,7 @@
 
 ##### kernal = rbf
 
-<img src="pics/svmtrain.png" style="zoom:50%;" />
+<img src="pics/svmtrain.png" style="zoom:40%;" />
 
 可以看到，软间隔c=1时，train和epoch的F1 score较为接近；调为1000，过拟合；调为500，仍过拟合；调为100，效果略有上升；调为50，持平；调为150，过拟合
 
@@ -182,7 +180,7 @@
 
 ##### kernal = linear
 
-<img src="pics/svmlinear.png" style="zoom:50%;" />
+<img src="pics/svmlinear.png" style="zoom:40%;" />
 
 软间隔c=1时，train和epoch的F1 score较为接近；调为100，持平
 
@@ -190,19 +188,75 @@ F1 score低于“kernal = rbf， c = 100”的模型
 
 ##### kernal = poly
 
-<img src="pics/svmpoly.png" style="zoom:50%;" />
+<img src="pics/svmpoly.png" style="zoom:40%;" />
 
 一阵狂调，皆失败...
 
 最终选择“kernal = rbf， c = 100”的模型在test集上进行测试
 
+
+
 ### 测试及分析
 
-#### 拟合情况及特点
+#### 拟合情况及F1 score， AUC， ROC曲线
+
+##### MLP2
+
+F1 score及AUC：
+
+<img src="pics/MLP2t.png" style="zoom:50%;" />
+
+分析：拟合良好，符合验证集预期
+
+ROC曲线：
+
+<img src="pics/ROC_curve_0.7558238514083215.png" style="zoom:33%;" />
 
 
 
-#### F1 score，ROC，AUC分析
+##### MLP3
+
+F1 score及AUC：
+
+<img src="pics/MLP3t.png" style="zoom:50%;" />
+
+分析：拟合良好，符合验证集预期
+
+ROC曲线：
+
+<img src="pics/ROC_curve_0.7574916280973238.png" style="zoom:33%;" />
+
+##### MLP4
+
+F1 score及AUC：
+
+<img src="pics/MLP4t.png" style="zoom:50%;" />
+
+分析：拟合良好，符合验证集预期、
+
+ROC曲线：
+
+<img src="pics/ROC_curve_0.7547711034758281.png" style="zoom:33%;" />
+
+##### SVM
+
+F1 score及AUC：
+
+<img src="pics/SVMt.png" style="zoom:50%;" />
+
+分析：有一定过拟合现象（train_F1_score比F1_score高了5个点），但大体上符合验证集预期
+
+ROC曲线：
+
+<img src="pics/ROC_curve_0.7433755760368663.png" style="zoom:33%;" />
+
+
+
+
+
+
+
+
 
 
 
