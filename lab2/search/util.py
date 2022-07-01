@@ -178,10 +178,6 @@ class PriorityQueue:
         self.heap = []
         self.count = 0
 
-    def show(self):
-        print("priority | count | position")
-        print(self.heap)
-
     def push(self, item, priority):
         entry = (priority, self.count, item)
         heapq.heappush(self.heap, entry)

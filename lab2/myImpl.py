@@ -138,11 +138,14 @@ class MyMinimaxAgent():
         self.depth = depth
 
     def minimax(self, state, depth):
-        if state.isTerminated() or depth == 0:
+        if state.isTerminated() or depth == -1:
             return None, state.evaluateScore()
 
         flag = state.isMe()
-        best_state, best_score = None, -float('inf') if flag == 1 else float('inf') # 初始化为最差的情况
+        if flag == 1:
+            best_state, best_score = None, -float('inf')
+        else:
+            best_state, best_score = None, float('inf')
         # pdb.set_trace()
         if flag == 1: # 这一步轮到人走，人希望max; 那么下一步，也就是child，是鬼；鬼希望min
             for child in state.getChildren():
@@ -153,11 +156,11 @@ class MyMinimaxAgent():
         else: # 这一步轮到鬼走，那么下一步，也就是child，是人/鬼（可能不止一个鬼）；人/鬼希望max/min
             for child in state.getChildren():
                 # pdb.set_trace()
-                nextflag = 1
-                for grandchild in child.getChildren():
-                    nextflag = grandchild.isMe()
-                    break
-                _, score = self.minimax(child, depth - 1) if nextflag == 1 else self.minimax(child, depth) # 
+                nextflag = child.isMe()
+                if nextflag == 1:
+                    _, score = self.minimax(child, depth - 1)
+                else:
+                    _, score = self.minimax(child, depth)
                 if score < best_score: # 对鬼来说，想要分数min
                     best_state, best_score = child, score
         
@@ -193,44 +196,35 @@ class MyAlphaBetaAgent():
         self.depth = depth
 
     def alphabeta(self, state, depth, alpha, beta): # alpha：best_score的下确界， beta：best_score的上确界
-        # pdb.set_trace()
-        if state.isTerminated() or depth == 0:
+        if state.isTerminated() or depth == -1:
             return None, state.evaluateScore()
 
-        best_state, best_score = None, -float('inf') if state.isMe() else float('inf')
-        for child in state.getChildren():
-            if state.isMe() == True: # 这一步轮到人走，人希望max; 那么下一步，也就是child，是鬼；鬼希望min
-                tmp_state = child # 先将下一步记为暂时最好的情况
-                tmp_score = -float('inf') # 同理，下一步鬼给人的状态会尽可能小，因此将暂时最好的情况记为-inf
-                tmp_score = max(tmp_score, self.alphabeta(child, depth - 1, alpha, beta)[1]) # 对于人来说，需要在（1）鬼给自己的状态（2）当前最好的分数 之间取较大的
-                if beta <= tmp_score: # 子节点中已经有比这个smaller的结果了，鬼肯定会给人最min的，所以不用考虑，剪枝
+        flag = state.isMe()
+        best_state = None
+        # pdb.set_trace()
+        if flag == 1: # 这一步轮到人走，人希望max; 那么下一步，也就是child，是鬼；鬼希望min
+            for child in state.getChildren():
+                _, score = self.alphabeta(child, depth - 1, alpha, beta)  # 记鬼给人的状态分数为score
+                if score > alpha: # 如果下一步鬼给人的状态比当前最好的分数大，那么就更新最好的分数
+                    best_state, alpha = child, score
+                if beta <= alpha: # 该极大节点的值>=α>=β，该极大节点后面的搜索到的值肯定会大于β，因此不会被其上层的极小节点所选用了。对于根节点，β为正无穷
                     break
-                if alpha < tmp_score: # 说明下确界需要更新（有更大的值可以选）
-                    alpha = tmp_score
-                    best_state = tmp_state
-                    best_score = alpha
- 
-            else: # 这一步轮到鬼走，那么下一步，也就是child，是人/鬼（可能不止一个鬼）；人/鬼希望max/min
-                tmp_state = child # 先将下一步记为暂时最好（对于鬼来说最好，也就是min）的情况
-                tmp_score = float('inf') # 同理，下一步人给鬼的状态会尽可能大，因此将暂时最好的情况记为inf
-                # 由于鬼可能不止一个，因此需要判断child的child:child_child是鬼还是人，这关系到tmp_score的取值
-                # flag = 0 表示child_child是鬼，flag = 1 表示child_child是人
-                flag = 0
-                for child_child in child.getChildren():
-                    flag  = 1 if child_child.isMe() else 0
-                    break
-                tmp_score = min(tmp_score, self.alphabeta(child, depth - 1, alpha, beta)[1]) \
-                if flag == 1 else min(tmp_score, self.alphabeta(child, depth, alpha, beta)[1])
-                if alpha >= tmp_score: # 子节点中已经有比这个bigger的结果了，人肯定会给鬼最max的，所以不用考虑，剪枝
-                    break
-                if beta > tmp_score: # 说明上确界需要更新（有更小的值可以选）
-                    beta = tmp_score
-                    best_state = tmp_state
-                    best_score = tmp_score
-                    
-        return best_state, best_score
+            return best_state, alpha
 
+        else: # 这一步轮到鬼走，那么下一步，也就是child，是人/鬼（可能不止一个鬼）；人/鬼希望max/min
+            for child in state.getChildren():
+                # pdb.set_trace()
+                nextflag = child.isMe()
+                if nextflag == 1:
+                    _, score = self.alphabeta(child, depth - 1, alpha, beta)
+                else:
+                    _, score = self.alphabeta(child, depth, alpha, beta)
+                if score < beta: # 对鬼来说，想要分数min
+                    best_state, beta = child, score
+                if beta <= alpha:
+                    break
+            return best_state, beta
+        
     def getNextState(self, state):
-        best_state, _ = self.alphabeta(state, self.depth, -float('inf'), float('inf'))
+        best_state, _ = self.alphabeta(state, self.depth, -float("inf"), float("inf"))
         return best_state
-
