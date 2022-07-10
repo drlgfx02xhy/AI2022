@@ -1,5 +1,5 @@
 import util
-import pdb
+
 """
 Data sturctures we will use are stack, queue and priority queue.
 
@@ -137,94 +137,80 @@ class MyMinimaxAgent():
     def __init__(self, depth):
         self.depth = depth
 
-    def minimax(self, state, depth):
-        if state.isTerminated() or depth == -1:
+
+    def max_value(self, state, depth):
+        if state.isTerminated() or depth == 0:
             return None, state.evaluateScore()
+        v = - float('inf')
+        for child in state.getChildren():
+            _, child_v = self.min_value(child, depth)
+            if child_v > v:
+                v = child_v
+                best_state = child
+        return best_state, v
+    
+    def min_value(self, state, depth):
+        if state.isTerminated() or depth == 0:
+            return None, state.evaluateScore()
+        v = float('inf')
+        for child in state.getChildren():
+            if child.isMe():
+                _, child_v = self.max_value(child, depth - 1)
+            else:
+                _, child_v = self.min_value(child, depth)
+            if child_v < v:
+                v = child_v
+                best_state = child
+        return best_state, v
 
-        flag = state.isMe()
-        if flag == 1:
-            best_state, best_score = None, -float('inf')
-        else:
-            best_state, best_score = None, float('inf')
-        # pdb.set_trace()
-        if flag == 1: # 这一步轮到人走，人希望max; 那么下一步，也就是child，是鬼；鬼希望min
-            for child in state.getChildren():
-                _, score = self.minimax(child, depth - 1)  # 记鬼给人的状态分数为score
-                if score > best_score: # 如果下一步鬼给人的状态比当前最好的分数大，那么就更新最好的分数
-                    best_state, best_score = child, score
-
-        else: # 这一步轮到鬼走，那么下一步，也就是child，是人/鬼（可能不止一个鬼）；人/鬼希望max/min
-            for child in state.getChildren():
-                # pdb.set_trace()
-                nextflag = child.isMe()
-                if nextflag == 1:
-                    _, score = self.minimax(child, depth - 1)
-                else:
-                    _, score = self.minimax(child, depth)
-                if score < best_score: # 对鬼来说，想要分数min
-                    best_state, best_score = child, score
-        
-        return best_state, best_score
+    def minimax(self, state, depth):
+        return self.max_value(state, depth)
 
     def getNextState(self, state):
         best_state, _ = self.minimax(state, self.depth)
         return best_state
     
-"""
-function alphabeta(node, depth, α, β, Player)         
-    if  depth = 0 or node is a terminal node
-        return the heuristic value of node
-    if  Player = MaxPlayer // 极大节点
-        for each child of node // 极小节点
-            α := max(α, alphabeta(child, depth-1, α, β, not(Player) ))   
-            if β ≤ α // 该极大节点的值>=α>=β，该极大节点后面的搜索到的值肯定会大于β，因此不会被其上层的极小节点所选用了。对于根节点，β为正无穷
-                break                             (* Beta cut-off *)
-        return α
-    else // 极小节点
-        for each child of node // 极大节点
-            β := min(β, alphabeta(child, depth-1, α, β, not(Player) )) // 极小节点
-            if β ≤ α // 该极大节点的值<=β<=α，该极小节点后面的搜索到的值肯定会小于α，因此不会被其上层的极大节点所选用了。对于根节点，α为负无穷
-                break                             (* Alpha cut-off *)
-        return β 
-(* Initial call *)
-alphabeta(origin, depth, -infinity, +infinity, MaxPlayer)
-"""
-
 class MyAlphaBetaAgent():
 
     def __init__(self, depth):
         self.depth = depth
 
-    def alphabeta(self, state, depth, alpha, beta): # alpha：best_score的下确界， beta：best_score的上确界
-        if state.isTerminated() or depth == -1:
+
+    def max_value(self, state, alpha, beta, depth):
+        if state.isTerminated() or depth == 0:
             return None, state.evaluateScore()
+        v = - float('inf')
+        for child in state.getChildren():
+            _, child_v = self.min_value(child, alpha, beta, depth)
+            if child_v > v:
+                v = child_v
+                best_state = child
+            if v > beta:
+                break
+            alpha = max(alpha, v)
+        return best_state, v
+    
+    def min_value(self, state, alpha, beta, depth):
+        if state.isTerminated() or depth == 0:
+            return None, state.evaluateScore()
+        v = float('inf')
+        for child in state.getChildren():
+            if child.isMe():
+                _, child_v = self.max_value(child, alpha, beta, depth - 1)
+            else:
+                _, child_v = self.min_value(child, alpha, beta, depth)
+            if child_v < v:
+                v = child_v
+                best_state = child
+            if v < alpha:
+                break
+            beta = min(beta, v)
+        return best_state, v
+            
+    def alphabeta(self, state, alpha, beta, depth): # alpha：best_score的下确界， beta：best_score的上确界
+        return self.max_value(state, alpha, beta, depth)
 
-        flag = state.isMe()
-        best_state = None
-        # pdb.set_trace()
-        if flag == 1: # 这一步轮到人走，人希望max; 那么下一步，也就是child，是鬼；鬼希望min
-            for child in state.getChildren():
-                _, score = self.alphabeta(child, depth - 1, alpha, beta)  # 记鬼给人的状态分数为score
-                if score > alpha: # 如果下一步鬼给人的状态比当前最好的分数大，那么就更新最好的分数
-                    best_state, alpha = child, score
-                if beta <= alpha: # 该极大节点的值>=α>=β，该极大节点后面的搜索到的值肯定会大于β，因此不会被其上层的极小节点所选用了。对于根节点，β为正无穷
-                    break
-            return best_state, alpha
-
-        else: # 这一步轮到鬼走，那么下一步，也就是child，是人/鬼（可能不止一个鬼）；人/鬼希望max/min
-            for child in state.getChildren():
-                # pdb.set_trace()
-                nextflag = child.isMe()
-                if nextflag == 1:
-                    _, score = self.alphabeta(child, depth - 1, alpha, beta)
-                else:
-                    _, score = self.alphabeta(child, depth, alpha, beta)
-                if score < beta: # 对鬼来说，想要分数min
-                    best_state, beta = child, score
-                if beta <= alpha:
-                    break
-            return best_state, beta
         
     def getNextState(self, state):
-        best_state, _ = self.alphabeta(state, self.depth, -float("inf"), float("inf"))
+        best_state, _ = self.alphabeta(state, -float("inf"), float("inf"), self.depth)
         return best_state
